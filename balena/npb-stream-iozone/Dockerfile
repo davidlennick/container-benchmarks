@@ -46,6 +46,8 @@ RUN MB=$(free | grep Mem | tr -s ' ' | cut -d ' ' -f 4) && \
 ADD https://www.nas.nasa.gov/assets/npb/NPB3.3.1.tar.gz .
 RUN tar -xzf NPB3.3.1.tar.gz && rm NPB3.3.1.tar.gz
 COPY npb/config/ NPB3.3.1/NPB3.3-OMP/config/
-RUN cd NPB3.3.1/NPB3.3-OMP && make suite
+RUN cd NPB3.3.1/NPB3.3-OMP && make suite 
+RUN cd NPB3.3.1/NPB3.3-OMP && sed -i 's/S/A/g'./config/suite.def && make suite 
 
+COPY start.sh .
 CMD /bin/bash
