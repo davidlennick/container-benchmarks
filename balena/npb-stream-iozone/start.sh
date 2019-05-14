@@ -1,12 +1,13 @@
 #!/bin/bash
 
+echo "Starting..."
 cd /app
 
-today=`date +%Y-%m-%d.%H:%M:%S`
+today=`date +%Y%m%d%H%M%S`
 dirname=results-$today
 mkdir results
 mkdir results/$dirname
-
+echo "Saving results to results/$dirname"
 
 # iozone benchmark
 # The test-type is a numeric value. The following are the various available test types and its numeric value.
@@ -24,19 +25,29 @@ mkdir results/$dirname
 #     11=pwritev/Re-pwritev
 #     12=preadv/Re-preadv
 
+echo "Starting iozone..."
 # 10MiB file, 8kb record size
-./iozone -i 0 -i 1 -s 10240 -r 8 -t $OMP_NUM_THREADS > results/$dirname/iozone-10mb-8kb.out
+./iozone -i 0 -i 1 -s 10240 -r 8 -t $(nproc) > results/$dirname/iozone-10mb-8kb.out
 
 # 100MiB file, 32kB record size
-./iozone -i 0 -i 1 -s 102400 -r 32 -t $OMP_NUM_THREADS > results/$dirname/iozone-100mb-32kb.out
+./iozone -i 0 -i 1 -s 102400 -r 32 -t $(nproc) > results/$dirname/iozone-100mb-32kb.out
+echo "Done."
 
 
+echo "Starting stream-gcc..."
 # stream benchmark
 ./stream-gcc > results/$dirname/stream.out
-
+echo "Done."
 
 # NPB 
+echo "Starting NPB..."
 for file in NPB3.3.1/NPB3.3-OMP/bin/*
 do
-  ./$file > results/$dirname/$file.out
+    echo "Starting $(basename $file)"
+    #touch /app/results/$dirname/$(basename $file.result.out
+    ./$file > /app/results/$dirname/$(basename $file).result.out
 done
+
+echo "Saving results to /data/$dirname.tar.gz"
+cd results
+tar -zcvf /data/$dirname.tar.gz $dirname

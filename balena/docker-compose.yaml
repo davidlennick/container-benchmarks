@@ -1,0 +1,16 @@
+version: '2'
+
+volumes:
+  bench-data:
+
+services:
+  bench1:
+    build: ./npb-stream-iozone
+    volumes:
+      - 'bench-data:/data'
+    restart: never
+
+
+
+
+
