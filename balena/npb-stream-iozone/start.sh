@@ -31,12 +31,16 @@ echo "Starting iozone..."
 
 # 100MiB file, 32kB record size
 ./iozone -i 0 -i 1 -s 102400 -r 32 -t $(nproc) > results/$dirname/iozone-100mb-32kb.out
+cat results/$dirname/iozone-10mb-8kb.out
+cat results/$dirname/iozone-100mb-32kb.out
+
 echo "Done."
 
 
 echo "Starting stream-gcc..."
 # stream benchmark
 ./stream-gcc > results/$dirname/stream.out
+cat results/$dirname/stream.out
 echo "Done."
 
 # NPB 
@@ -46,8 +50,10 @@ do
     echo "Starting $(basename $file)"
     #touch /app/results/$dirname/$(basename $file.result.out
     ./$file > /app/results/$dirname/$(basename $file).result.out
+    cat /app/results/$dirname/$(basename $file).result.out
 done
 
-echo "Saving results to /data/$dirname.tar.gz"
-cd results
-tar -zcvf /data/$dirname.tar.gz $dirname
+echo "Saving results to /app/$dirname.tar.gz"
+cd /app
+tar -czvf $dirname.tar.gz /app/results/$dirname
+echo "Done"

@@ -46,5 +46,10 @@ RUN cd NPB3.3.1/NPB3.3-OMP && make suite
 RUN cd NPB3.3.1/NPB3.3-OMP && sed -i 's/S/A/g' ./config/suite.def && make suite 
 
 
+# dependencies for network performance
+
+
+
+
 COPY start.sh .
 CMD /app/start.sh 
