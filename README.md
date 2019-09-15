@@ -19,3 +19,13 @@ a collection of benchmarks to compare different docker-compattible IoT container
 
 
 container isolation properties
+
+
+
+
+# init
+from a management console (I'm using ubuntu), you can init the different envs by doing the following:
+
+```
+ssh USER@HOST 'bash -s' < SCRIPT    # usually init.sh
+```

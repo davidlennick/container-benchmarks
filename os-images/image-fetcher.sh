@@ -16,7 +16,7 @@ sudo -S apt update
 sudo -S apt install balena-etcher-electron
 
 
-red_print "Downloading and unzipping balenaOS img"
+red_print "Downloading balenaOS img"
 
 mkdir balenaOS-2.38.0-rev1-dev
 cd balenaOS-2.38.0-rev1-dev
@@ -26,27 +26,37 @@ unzip balena.img.zip
 cd ..
 
 
-red_print "Downloading and unzipping hypriotOS img"
+red_print "Downloading hypriotOS img"
 
 mkdir hypriotOS-rpi-v1.11.1
 cd hypriotOS-rpi-v1.11.1
 
 wget https://github.com/hypriot/image-builder-rpi/releases/download/v1.11.1/hypriotos-rpi-v1.11.1.img.zip
-unzip hypriotos-rpi-v1.11.1.img.zip
 cd ..
 
 
-red_print "Downloading and unzipping rancherOS img"
+red_print "Downloading rancherOS img"
 
-mkdir rancherOS-1.5.3
-cd rancherOS-1.5.3
+mkdir rancherOS-1.5.4
+cd rancherOS-1.5.4
 
-wget https://github.com/rancher/os/releases/download/v1.5.3/rancheros-raspberry-pi64.zip
-unzip rancheros-raspberry-pi64.zip
+wget https://github.com/rancher/os/releases/download/v1.5.4/rancheros-raspberry-pi64.zip
 cd ..
 
-red_print "########################################################\n \
-Use balena-etcher to burn balenaOS, hypriotOS, and rancherOS\n
-balenaOS: \t ssh root@<IP> -p 22222 \n
+
+red_print "Downloading raspbian lite img"
+
+mkdir raspbian-buster-lite-2019-07-10
+cd raspbian-buster-lite-2019-07-10
+
+wget http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-07-12/2019-07-10-raspbian-buster-lite.zip
+cd ..
+
+
+red_print "########################################################\n\
+Use balena-etcher to burn balenaOS, hypriotOS, rancherOS, and raspbian lite \n
+For raspbian-lite, add an empty file called \"ssh\" to the boot partition (or run raspbian-prep.sh) \n
+rasbian: \t ssh pi@<IP> \t\t # password: raspberry \n 
+balenaOS: \t ssh root@<IP> -p 22222 \t# no password \n 
 hypriotOS: \t ssh pirate@<IP> \t # password: hypriot \n
 rancherOS: \t ssh rancher@<IP> \t # password: rancher"

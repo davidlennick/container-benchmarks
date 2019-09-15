@@ -8,7 +8,7 @@ FROM ${BASE}
 
 WORKDIR /app
 RUN apt -y update
-RUN apt install -y gcc g++ make build-essential gfortran libgomp1
+RUN apt install -y gcc g++ make procps build-essential gfortran libgomp1
 
 
 # iozone
@@ -29,10 +29,12 @@ RUN cd iozone3_487*/src/current && \
 ADD https://www.cs.virginia.edu/stream/FTP/Code/stream.c .
 RUN MB=$(free | grep Mem | tr -s ' ' | cut -d ' ' -f 4) && \
     ARRAYSIZE=$(( $MB * 40 )) && \
-    gcc -fstrict-aliasing -Ofast -mtune=native -march=native \
-    -fopenmp ./stream.c -DSTREAM_ARRAY_SIZE=$ARRAYSIZE \
-    -o stream-gcc && \
-    export OMP_NUM_THREADS=$(nproc) && \
+    gcc -fstrict-aliasing -fopenmp -Ofast -mcmodel=medium -mtune=native -march=native \
+    ./stream.c \
+    -DSTREAM_ARRAY_SIZE=$ARRAYSIZE \
+    -o stream-gcc 
+
+RUN export OMP_NUM_THREADS=$(nproc) && \
     export GOMP_CPU_AFFINITY="0-$(($OMP_NUM_THREADS - 1))"
 
 

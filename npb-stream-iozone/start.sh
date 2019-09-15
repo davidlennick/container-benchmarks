@@ -43,6 +43,7 @@ echo "Starting stream-gcc..."
 cat results/$dirname/stream.out
 echo "Done."
 
+
 # NPB 
 echo "Starting NPB..."
 for file in NPB3.3.1/NPB3.3-OMP/bin/*
