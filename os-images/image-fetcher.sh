@@ -18,20 +18,17 @@ sudo -S apt install balena-etcher-electron
 
 red_print "Downloading balenaOS img"
 
-mkdir balenaOS-2.38.0-rev1-dev
-cd balenaOS-2.38.0-rev1-dev
-
-wget https://files.resin.io/resinos/raspberrypi3/2.38.0%2Brev1.dev/image/balena.img.zip
-unzip balena.img.zip
+mkdir balenaOS-2.43.0-rev1-dev
+cd balenaOS-2.43.0-rev1-dev
+wget https://files.resin.io/resinos/raspberrypi3/2.43.0%2Brev1.dev/image/balena.img.zip
 cd ..
 
 
 red_print "Downloading hypriotOS img"
 
-mkdir hypriotOS-rpi-v1.11.1
-cd hypriotOS-rpi-v1.11.1
-
-wget https://github.com/hypriot/image-builder-rpi/releases/download/v1.11.1/hypriotos-rpi-v1.11.1.img.zip
+mkdir hypriotOS-rpi-v1.11.2
+cd hypriotOS-rpi-v1.11.2
+wget https://github.com/hypriot/image-builder-rpi/releases/download/v1.11.2/hypriotos-rpi-v1.11.2.img.zip
 cd ..
 
 
@@ -39,7 +36,6 @@ red_print "Downloading rancherOS img"
 
 mkdir rancherOS-1.5.4
 cd rancherOS-1.5.4
-
 wget https://github.com/rancher/os/releases/download/v1.5.4/rancheros-raspberry-pi64.zip
 cd ..
 
@@ -48,7 +44,6 @@ red_print "Downloading raspbian lite img"
 
 mkdir raspbian-buster-lite-2019-07-10
 cd raspbian-buster-lite-2019-07-10
-
 wget http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-07-12/2019-07-10-raspbian-buster-lite.zip
 cd ..
 
