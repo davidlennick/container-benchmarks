@@ -1,0 +1,21 @@
+name: OverheadBench
+image: polinux/stress
+command: stress --cpu 1 --io 1 --vm 1 --vm-bytes 128M --timeout 10s
+detached: true
+drivers:
+  - type: Docker
+    threads: 2
+    iterations: 3
+  - type: DockerCLI
+    threads: 2
+    iterations: 3
+commands:
+- run
+- stats
+- pause
+- stats
+- resume
+- stats
+- wait
+- stats
+- remove

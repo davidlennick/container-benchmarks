@@ -1,0 +1,20 @@
+name: DockerRun
+image: alpine:latest
+command: date
+detached: true
+drivers:
+  - type: Docker
+    threads: 4
+    iterations: 10
+  - type: DockerCLI
+    threads: 4
+    iterations: 10
+commands:
+  - run
+  - stats
+  - pause
+  - stats
+  - wait
+  - resume
+  - stats
+  - delete

@@ -17,7 +17,6 @@ a collection of benchmarks to compare different docker-compattible IoT container
 
 # process
 
-
 container isolation properties
 
 
@@ -29,3 +28,7 @@ from a management console (I'm using ubuntu), you can init the different envs by
 ```
 ssh USER@HOST 'bash -s' < SCRIPT    # usually init.sh
 ```
+
+
+# notes
+use node 10 (install with nvm) for balena-cli

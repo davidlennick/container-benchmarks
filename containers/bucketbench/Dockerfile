@@ -1,0 +1,15 @@
+FROM debian:latest
+
+WORKDIR /app
+RUN apt update && apt install -y git golang-go make
+#RUN echo "#include <unistd.h>" > /usr/include/sys/unistd.h
+RUN git clone https://github.com/estesp/bucketbench
+RUN cd bucketbench && make
+RUN cd bucketbench && make install
+
+# RUN apt install -y curl
+# RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+
+COPY ./bench* /app/
+#RUN "bucketbench run -b /app/bench.yaml"
+CMD bucketbench run -b /app/bench-run.yaml

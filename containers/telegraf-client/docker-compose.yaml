@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  telegraf-client:
+    build: ./telegraf
+    privileged: true
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW 
+    restart: never
