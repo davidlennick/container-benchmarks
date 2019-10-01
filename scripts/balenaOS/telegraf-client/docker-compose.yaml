@@ -2,7 +2,7 @@ version: '2'
 
 services:
   telegraf-client:
-    build: ./telegraf
+    image: registry.lennick.ca/telegraf-client:arm
     privileged: true
     network_mode: host
     cap_add:

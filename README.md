@@ -32,3 +32,6 @@ ssh USER@HOST 'bash -s' < SCRIPT    # usually init.sh
 
 # notes
 use node 10 (install with nvm) for balena-cli
+
+enable experimental for docker buildx: https://github.com/docker/buildx#docker-ce
+

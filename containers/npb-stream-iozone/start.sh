@@ -7,6 +7,9 @@ today=`date +%Y%m%d%H%M%S`
 dirname=results-$today
 mkdir results
 mkdir results/$dirname
+mkdir results/$dirname/iozone
+mkdir results/$dirname/npb
+mkdir results/$dirname/stream
 echo "Saving results to results/$dirname"
 
 # iozone benchmark
@@ -27,20 +30,20 @@ echo "Saving results to results/$dirname"
 
 echo "Starting iozone..."
 # 10MiB file, 8kb record size
-./iozone -i 0 -i 1 -s 10240 -r 8 -t $(nproc) > results/$dirname/iozone-10mb-8kb.out
+./iozone -i 0 -i 1 -s 10240 -r 8 -t $(nproc) > results/$dirname/iozone/iozone-10mb-8kb.out
 
 # 100MiB file, 32kB record size
-./iozone -i 0 -i 1 -s 102400 -r 32 -t $(nproc) > results/$dirname/iozone-100mb-32kb.out
-cat results/$dirname/iozone-10mb-8kb.out
-cat results/$dirname/iozone-100mb-32kb.out
+./iozone -i 0 -i 1 -s 102400 -r 32 -t $(nproc) > results/$dirname/iozone/iozone-100mb-32kb.out
+cat results/$dirname/iozone/iozone-10mb-8kb.out
+cat results/$dirname/iozone/iozone-100mb-32kb.out
 
 echo "Done."
 
 
 echo "Starting stream-gcc..."
 # stream benchmark
-./stream-gcc > results/$dirname/stream.out
-cat results/$dirname/stream.out
+./stream-gcc > results/$dirname/stream/stream.out
+cat results/$dirname/stream/stream.out
 echo "Done."
 
 
@@ -50,8 +53,8 @@ for file in NPB3.3.1/NPB3.3-OMP/bin/*
 do
     echo "Starting $(basename $file)"
     #touch /app/results/$dirname/$(basename $file.result.out
-    ./$file > /app/results/$dirname/$(basename $file).result.out
-    cat /app/results/$dirname/$(basename $file).result.out
+    ./$file > /app/results/$dirname/npb/$(basename $file).result.out
+    cat /app/results/$dirname/npb/$(basename $file).result.out
 done
 
 echo "Saving results to /app/$dirname.tar.gz"

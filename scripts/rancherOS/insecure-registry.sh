@@ -1,3 +1,3 @@
 #!/bin/bash
-
-sudo ros config set rancher.docker.args "['daemon','--insecure-registry','192.168.199.88:5000']"
+# not used
+sudo ros config set rancher.docker.args "['daemon','--insecure-registry','10.0.0.175:32000']"
