@@ -64,8 +64,8 @@ fi
 
 sudo apt install -y sshpass
 container_name=$(basename $4)
-sshpass -p$2 scp -r $4 $1:~/$container_name
-sshpass -p$2 ssh -oStrictHostKeyChecking=no $1 "cd $container_name \
+sshpass -p$2 scp -r $4/ $1:~/
+sshpass -p$2 ssh -oStrictHostKeyChecking=no $1 "cd ~/$container_name \
 && printf \"\n\nBUILDING $container_name\n\n\" \
 && echo \"docker build --progress plain -t $3/$container_name:arm .\" \
 && docker build --progress plain -t $3/$container_name:arm . \

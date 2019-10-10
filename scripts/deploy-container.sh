@@ -52,6 +52,7 @@ red_print "Deploying to balena"
 ssh -oStrictHostKeyChecking=no -p 22222 root@$1 "balena stop $6 || true && \
 balena rm $6 || true && \
 balena system prune -f  && \
+balena pull $5/$6:arm && \
 balena run -d --privileged --network=host --name $6 $5/$6:arm"
 
 cd ../../
@@ -59,16 +60,19 @@ red_print "Deploying to hypriot"
 sshpass -phypriot ssh -oStrictHostKeyChecking=no pirate@$2 "docker stop $6 || true && \
 docker rm $6 || true && \
 docker system prune -f  && \
+docker pull $5/$6:arm && \
 docker run -d --privileged --network=host --name $6 $5/$6:arm"
 
 red_print "Deploying to rancher"
 sshpass -prancher ssh -oStrictHostKeyChecking=no rancher@$3 "docker stop $6 || true && \
 docker rm $6 || true && \
 docker system prune -f && \
+docker pull $5/$6:arm && \
 docker run -d --privileged --network=host --name $6 $5/$6:arm"
 
 red_print "Deploying to rasbian"
 sshpass -praspberry ssh -oStrictHostKeyChecking=no pi@$4 "docker stop $6 || true && \
 docker rm $6 || true && \
 docker system prune -f && \
+docker pull $5/$6:arm && \
 docker run -d --privileged --network=host --name $6 $5/$6:arm"

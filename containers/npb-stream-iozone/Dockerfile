@@ -48,11 +48,8 @@ COPY npb/config/ NPB3.3.1/NPB3.3-OMP/config/
 RUN cd NPB3.3.1/NPB3.3-OMP && make suite 
 RUN cd NPB3.3.1/NPB3.3-OMP && sed -i 's/S/A/g' ./config/suite.def && make suite 
 
-
-# dependencies for network performance
-
-
-
+RUN apt install -y python3 python3-pip && python3 -m pip install requests
+COPY *.py ./
 
 COPY start.sh .
 CMD /app/start.sh 

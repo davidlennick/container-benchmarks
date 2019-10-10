@@ -3,6 +3,7 @@ import os
 import json
 from pprint import pprint
 
+import requests
 
 def parse_npb_res(filename):
   # res = {
@@ -48,24 +49,37 @@ def parse_npb_res(filename):
   # pprint(res)
   return res
 
-for r, d, f in os.walk(sys.argv[1]):
-  print(r)
-  print(f)
 
-  res = {}  
-  
-  for name in f:
-    parse_res = parse_npb_res("{}/{}".format(r, name))
+if __name__ == "__main__":
 
-    if parse_res['name'] not in res.keys():
-      res[parse_res['name']] = {}
-    
-    if parse_res['class'] not in res[parse_res['name']].keys():
-      res[parse_res['name']][parse_res['class']] = {}
-    
-    res[parse_res['name']][parse_res['class']] = parse_res
+  res = {
+    'run_instance': str(sys.argv[3])
+  }  
 
-  pprint(res)
+  for r, d, f in os.walk(sys.argv[1]):
+    for name in f:
+      parse_res = parse_npb_res("{}/{}".format(r, name))
 
+      if parse_res['name'] not in res.keys():
+        res[parse_res['name']] = {}
+      
+      if parse_res['class'] not in res[parse_res['name']].keys():
+        res[parse_res['name']][parse_res['class']] = {}
+      
+      res[parse_res['name']][parse_res['class']] = parse_res
+
+    pprint(res)
+
+  res = { 
+    'npb': res,
+    'host': str(sys.argv[4]),
+    'type': 'npb'     
+  }
+
+  r = requests.post(sys.argv[2], json=res)
+
+  pprint(json.loads(r.request.body))
+  print(r.text)
+  print(r.status_code)
 
       

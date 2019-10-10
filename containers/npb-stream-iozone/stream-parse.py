@@ -4,6 +4,7 @@ import json
 from pprint import pprint
 import re
 
+import requests
 
 def parse_stream_res(filename):
 
@@ -27,10 +28,10 @@ def parse_stream_res(filename):
         split_line = l.split(None, 5)
         metric = split_line[0].replace(":", "").lower()
         res[metric] = {
-          'best_rate_mb_s': split_line[1],
-          'avg_t': split_line[2],
-          'min_t': split_line[3],
-          'max_t': split_line[4]
+          'best_rate_mb_s': float(split_line[1]),
+          'avg_t': float(split_line[2]),
+          'min_t': float(split_line[3]),
+          'max_t': float(split_line[4])
         } 
 
       if 'array element' in l:
@@ -42,32 +43,35 @@ def parse_stream_res(filename):
         res['offset'] = arr_line[1]
 
       if 'Memory per array' in l:
-        res['memory_per_array_MiB'] = re.findall(regex_float, l)[0]
+        res['memory_per_array_MiB'] = float(re.findall(regex_float, l)[0])
 
       if 'Total memory required' in l:
-        res['total_req_memory_MiB'] = re.findall(regex_float, l)[0]
-
-  pprint(res)
-      
-
-
-
-
-
-for r, d, f in os.walk(sys.argv[1]):
-  res = {}  
-  
-  for name in f:
-    parse_stream_res("{}/{}".format(r, name))
-  #   parse_res = 
-  #   if parse_res['name'] not in res.keys():
-  #     res[parse_res['name']] = {}
-    
-  #   if parse_res['class'] not in res[parse_res['name']].keys():
-  #     res[parse_res['name']][parse_res['class']] = {}
-    
-  #   res[parse_res['name']][parse_res['class']] = parse_res
+        res['total_req_memory_MiB'] = float(re.findall(regex_float, l)[0])
 
   # pprint(res)
+  return res
+      
+
+if __name__ == "__main__":
+
+  res = {'run_instance': str(sys.argv[3])} 
+
+  for r, d, f in os.walk(sys.argv[1]):
+    for name in f:
+      parse_res = parse_stream_res("{}/{}".format(r, name))
+      
+  res = {
+    'stream': parse_res,
+    'host': str(sys.argv[4]),
+    'type': 'stream'     
+  }
+
+  r = requests.post(sys.argv[2], json=res)
+
+  pprint(json.loads(r.request.body))
+  print(r.text)
+  print(r.status_code)
+
+
 
 
