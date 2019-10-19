@@ -1,0 +1,12 @@
+name: RunStop
+image: alpine:latest
+command: /bin/ash
+detached: true
+drivers:
+  - type: Docker
+    threads: 1
+    iterations: 1
+commands:
+  - run
+  - stop
+  - delete

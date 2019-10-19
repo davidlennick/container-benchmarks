@@ -1,13 +1,10 @@
-name: DockerRun
+name: RunStop
 image: alpine:latest
-command: date
+command: /bin/ash
 detached: true
 drivers:
   - type: Docker
-    threads: 2
-    iterations: 10
-  - type: DockerCLI
-    threads: 2
+    threads: 4
     iterations: 10
 commands:
   - run

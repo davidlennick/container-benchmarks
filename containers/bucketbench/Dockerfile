@@ -1,15 +1,18 @@
-FROM debian:latest
+ARG BASE="golang:buster"
+FROM ${BASE}
 
 WORKDIR /app
-RUN apt update && apt install -y git golang-go make
-#RUN echo "#include <unistd.h>" > /usr/include/sys/unistd.h
-RUN git clone https://github.com/estesp/bucketbench
-RUN cd bucketbench && make
-RUN cd bucketbench && make install
+RUN go get github.com/estesp/bucketbench
+RUN cd $GOPATH/src/github.com/estesp/bucketbench && make && make install
 
-# RUN apt install -y curl
-# RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+RUN apt update
+RUN apt install -y python3 python3-pip 
+RUN python3 -m pip install requests
 
-COPY ./bench* /app/
-#RUN "bucketbench run -b /app/bench.yaml"
-CMD bucketbench run -b /app/bench-run.yaml
+RUN apt install curl
+
+COPY start.sh ./
+COPY ./bb* /app/
+COPY ./bucketbench* /app/
+#CMD bucketbench run -b /app/bench-run.yaml
+CMD ./start.sh

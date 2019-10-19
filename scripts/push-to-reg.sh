@@ -64,6 +64,7 @@ fi
 
 sudo apt install -y sshpass
 container_name=$(basename $4)
+sshpass -p$2 ssh -oStrictHostKeyChecking=no $1 "cd ~/ && sudo rm -rf $container_name"
 sshpass -p$2 scp -r $4/ $1:~/
 sshpass -p$2 ssh -oStrictHostKeyChecking=no $1 "cd ~/$container_name \
 && printf \"\n\nBUILDING $container_name\n\n\" \
