@@ -23,6 +23,10 @@ if [ -z "$4" ]
     echo "No argument supplied. IP of raspbian-lite required!"
     exit 1
 fi
+ssh-keygen -f "/home/user/.ssh/known_hosts" -R "$1"
+ssh-keygen -f "/home/user/.ssh/known_hosts" -R "$2"
+ssh-keygen -f "/home/user/.ssh/known_hosts" -R "$3"
+ssh-keygen -f "/home/user/.ssh/known_hosts" -R "$4"
 
 gnome-terminal --title="BalenaOS" -e "ssh -oStrictHostKeyChecking=no root@$1 -p 22222"
 gnome-terminal --title="HypriotOS" -e "sshpass -phypriot ssh -oStrictHostKeyChecking=no pirate@$2"

@@ -11,7 +11,6 @@ echo "Saving results to results/$dirname"
 echo "Starting bucketbench..."
 curl -i -XPOST "http://10.0.0.175:30099/telegraf" --data-binary '{ "host": "'"$hn"'", "type": "bucketbench", "bucketbench": { "run_instance": '"$today"', "status": 0 }}'
 
-
 bucketbench run -b bb-run-stop.yaml --overhead --log-level debug >> results/$dirname/bucketbench/bb-run-stop.out
 cat results/$dirname/bucketbench/bb-run-stop.out
 
